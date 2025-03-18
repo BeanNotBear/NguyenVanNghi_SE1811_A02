@@ -19,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Account\" />
     <Folder Include="Pages\Category\" />
     <Folder Include="Pages\Profile\" />
     <Folder Include="Pages\NewsArticle\" />
