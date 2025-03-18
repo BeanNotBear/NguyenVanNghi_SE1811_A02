@@ -1,0 +1,52 @@
+﻿@model NguyenVanNghiRazorPages.Pages.Account.IndexModel
+@{
+}
+<div class="modal" id="createAccount">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form asp-page="Index" method="post">
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Modal Heading</h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					<div class="mb-3 mt-3">
+						<label asp-for="AccountDTO.AccountName" class="form-label">Name:</label>
+						<input asp-for="AccountDTO.AccountName" type="text" class="form-control" placeholder="Enter name">
+						<span asp-validation-for="AccountDTO.AccountName"></span>
+					</div>
+					<div class="mb-3 mt-3">
+						<label asp-for="AccountDTO.AccountRole" class="form-label">Role:</label>
+						<select asp-for="AccountDTO.AccountRole" class="form-select w-auto" asp-items="Model.Roles">
+						</select>
+						<span asp-validation-for="AccountDTO.AccountRole"></span>
+					</div>
+					<div class="mb-3 mt-3">
+						<label asp-for="AccountDTO.AccountEmail" class="form-label">Email:</label>
+						<input asp-for="AccountDTO.AccountEmail" type="email" class="form-control" placeholder="Enter email">
+						<span asp-validation-for="AccountDTO.AccountEmail"></span>
+					</div>
+					<div class="mb-3">
+						<label asp-for="AccountDTO.AccountPassword" class="form-label">Password:</label>
+						<input asp-for="AccountDTO.AccountPassword" type="password" class="form-control" placeholder="Enter password">
+						<span asp-validation-for="AccountDTO.AccountPassword"></span>
+					</div>
+					<div class="mb-3">
+						<label asp-for="AccountDTO.ConfirmPassword" class="form-label">Password:</label>
+						<input asp-for="AccountDTO.ConfirmPassword" type="password" class="form-control" placeholder="Re-Enter password">
+						<span asp-validation-for="AccountDTO.ConfirmPassword"></span>
+					</div>
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button asp-page-handler="Create" type="submit" class="btn btn-primary">Submit</button>
+					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
