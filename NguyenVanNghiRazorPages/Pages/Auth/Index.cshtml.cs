@@ -48,7 +48,7 @@ namespace NguyenVanNghiRazorPages.Pages.Auth
 				authProperties.ExpiresUtc = DateTime.UtcNow.AddDays(30);
 			}
 			await HttpContext.SignInAsync(claimsPrincipal, authProperties);
-			return RedirectToPage("Index", "");
+			return RedirectToPage("/Index");
 		}
 	}
 }
