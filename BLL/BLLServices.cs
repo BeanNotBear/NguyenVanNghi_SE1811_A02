@@ -14,6 +14,7 @@ namespace BLL
 			services.AddScoped<IAccountService, AccountService>();
 			services.AddScoped<ICategoryService, CategoryService>();
 			services.AddScoped<INewsArticleService, NewsArticleService>();
+			services.AddScoped<ITagService, TagSerive>();
 		}
 	}
 }

@@ -31,5 +31,7 @@ namespace BLL.DTOs
 
 		[Required]
 		public string NewsContent { get; set; } = null!;
+
+		public IEnumerable<int> Tags { get; set; }
 	}
 }

@@ -1,0 +1,77 @@
+﻿@page
+@model NguyenVanNghiRazorPages.Pages.NewsArticle.DetailsModel
+@{
+}
+<div class="container mt-4">
+	<div class="row">
+		<div class="col-lg-8 mx-auto">
+
+			<div class="card shadow-sm mb-4">
+				<div class="card-body">
+					<h1 class="card-title">Breaking News: @Model.NewsArticleDetailsDTO.NewsTitle</h1>
+					<p class="lead fw-bold">@Model.NewsArticleDetailsDTO.Headline</p>
+
+					<div class="d-flex justify-content-between align-items-center mb-3">
+						<div class="text-muted">
+							<span class="me-3">
+								<i class="bi bi-calendar"></i> @Model.NewsArticleDetailsDTO.CreatedDate.ToString("MMMM d, yyyy, h:mm tt")
+							</span>
+							<span class="me-3">
+								<i class="bi bi-person"></i> @Model.NewsArticleDetailsDTO.CreatedBy
+							</span>
+							<span class="badge bg-primary">@Model.NewsArticleDetailsDTO.Category</span>
+						</div>
+						<div>
+							<span class="badge bg-success">@Model.NewsArticleDetailsDTO.NewsStatus</span>
+						</div>
+					</div>
+
+					<hr>
+
+					<div class="my-4">
+						<img src="https://lh7-rt.googleusercontent.com/docsz/AD_4nXcMWMLZbyQBTasl65xrW2QIMqwAJT6_qzhTFzBk_60iV9K059FPU56_g6ay2OpLNoKtV1WWXNgTptL-fNqaCO0dAohO4kz_rBwbpZpn9hNQdsmwMS_sFTrmz6HKQZsORdJleeeE2sc6S2OfLh-I6aBmbTwP?key=tE_qip6BHPL4g00JXL_X6Q" alt="News Image" class="article-image rounded">
+					</div>
+
+					<div class="news-content my-4">
+						<p>@Model.NewsArticleDetailsDTO.NewsContent</p>
+					</div>
+
+					<div class="mt-4">
+						<h5>Source</h5>
+						<p>@Model.NewsArticleDetailsDTO.NewsSource</p>
+					</div>
+
+					<div class="mt-4">
+						<h5>Tags</h5>
+						<div>
+							@foreach (var tag in Model.NewsArticleDetailsDTO.Tags)
+							{
+								<span class="tag">@tag</span>
+							}
+						</div>
+					</div>
+
+					<hr>
+
+					<div class="d-flex justify-content-between text-muted small">
+						<div>
+							@if (Model.NewsArticleDetailsDTO.UpdatedBy != "" && @Model.NewsArticleDetailsDTO.ModifiedDate != null)
+							{
+								<span>Updated: @Model.NewsArticleDetailsDTO.ModifiedDate by @Model.NewsArticleDetailsDTO.UpdatedBy</span>
+							}
+						</div>
+						<div>
+							<span>Article ID: @Model.NewsArticleDetailsDTO.NewsArticleId</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="d-flex mb-5">
+				<a asp-page="Manage" class="btn btn-outline-primary">
+					<i class="bi bi-arrow-left"></i> Back to previous Page
+				</a>
+			</div>
+		</div>
+	</div>
+</div>

@@ -38,6 +38,12 @@
 						<span asp-validation-for="CreateNewsArticleDTO.CategoryId" class="text-danger"></span>
 					</div>
 					<div class="mb-3">
+						<label asp-for="CreateNewsArticleDTO.Tags" class="form-label">Tags:</label>
+						<select multiple asp-for="CreateNewsArticleDTO.Tags" class="form-select w-auto" asp-items="@Model.Tags">
+						</select>
+						<span asp-validation-for="CreateNewsArticleDTO.Tags" class="text-danger"></span>
+					</div>
+					<div class="mb-3">
 						<label asp-for="CreateNewsArticleDTO.NewsStatus" class="form-label">Status:</label>
 						<select asp-for="CreateNewsArticleDTO.NewsStatus" class="form-select w-auto" asp-items="@Model.Status">
 						</select>
