@@ -30,10 +30,30 @@ function loadDelete(id) {
 	$("#deleteAccountID").val(id)
 }
 
-function logout() {
-	document.cookie.split(";").forEach(function (cookie) {
-		document.cookie = cookie
-			.replace(/^ +/, "") // Xóa khoảng trắng đầu dòng
-			.replace(/=.*/, "=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/"); // Đặt ngày hết hạn về quá khứ
+function editNewsArticle(id) {
+	var statusMap = {
+		0: "Inactive",
+		1: "Active",
+	};
+	$.ajax({
+		type: 'GET',
+		url: 'Manage?handler=Edit',
+		data: { id: id },
+		success: function (data) {
+			$("#EditNewsArticleDTO_NewsTitle").val(data.newsTitle);
+			$("#EditNewsArticleDTO_CategoryId").val(data.categoryId);
+			$("#EditNewsArticleDTO_Headline").val(data.headline);
+			$("#EditNewsArticleDTO_NewsArticleId").val(data.newsArticleId);
+			$("#EditNewsArticleDTO_NewsContent").val(data.newsContent);
+			$("#EditNewsArticleDTO_NewsSource").val(data.newsSource);
+			var statusText = statusMap[data.newsStatus];
+			$("#EditNewsArticleDTO_NewsStatus").val(statusText);
+			$("#EditNewsArticleDTO_Tags").val(data.tags);
+			
+			console.log(data);
+		},
+		error: function (data) {
+
+		}
 	});
 }
