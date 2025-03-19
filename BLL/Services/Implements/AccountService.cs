@@ -4,6 +4,10 @@ using BLL.Services.Interfaces;
 using DAL.Entities;
 using DAL.Repositories.Interfaces;
 using Shared.Enums;
+using Shared.PasswordHasher;
+using System;
+using System.Data;
+using System.Drawing;
 using System.Linq.Expressions;
 
 namespace BLL.Services.Implements
@@ -13,6 +17,7 @@ namespace BLL.Services.Implements
 		public async Task Create(CreateAccountDTO createAccountDTO)
 		{
 			var account = mapper.Map<SystemAccount>(createAccountDTO);
+			account.AccountPassword = PasswordHasher.Instance.Hash(account.AccountPassword);
 			await unitOfWork.GenericRepository.Insert(account);
 			await unitOfWork.SaveChangesAsync();
 		}
@@ -26,7 +31,46 @@ namespace BLL.Services.Implements
 					(string.IsNullOrWhiteSpace(search)) || x.AccountEmail.ToLower() == search.ToLower()
 				) && (role.HasValue == false || x.AccountRole == (int)(role.Value))
 			);
-			return mapper.Map<IEnumerable<SystemAccountDTO>>(await unitOfWork.GenericRepository.GetAll(predicate));
+			var accounts = mapper.Map<IEnumerable<SystemAccountDTO>>(await unitOfWork.GenericRepository.GetAll(predicate));
+			return accounts;
+		}
+
+		public async Task<SystemAccountDetailDTO> GetByID(int ID, string? properties = null)
+		{
+			return mapper.Map<SystemAccountDetailDTO>(await FindByID(ID, properties));
+		}
+
+		public async Task Update(EditAccountDTO editAccountDTO)
+		{
+
+			var account = await FindByID(editAccountDTO.AccountID);
+			account.AccountName = editAccountDTO.AccountName;
+			account.AccountEmail = editAccountDTO.AccountEmail;
+			account.AccountRole = (int)(editAccountDTO.AccountRole);
+			unitOfWork.GenericRepository.Update(account);
+			await unitOfWork.SaveChangesAsync();
+		}
+
+		public async Task Delete(int id)
+		{
+			var account = await FindByID(id);
+			unitOfWork.GenericRepository.Delete(account);
+			await unitOfWork.SaveChangesAsync();
+		}
+
+		private async Task<SystemAccount?> FindByID(int ID, string? properties = null)
+		{
+			Expression<Func<SystemAccount, bool>> predicate = x =>
+			(
+				x.AccountId == ID
+			);
+			string[]? joins = null;
+			if (properties != null)
+			{
+				joins = properties.Split(',');
+			}
+			var account = await unitOfWork.GenericRepository.Get(predicate, joins);
+			return account;
 		}
 	}
 }

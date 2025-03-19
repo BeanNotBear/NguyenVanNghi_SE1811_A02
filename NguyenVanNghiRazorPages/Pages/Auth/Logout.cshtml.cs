@@ -7,10 +7,12 @@ namespace NguyenVanNghiRazorPages.Pages.Auth
 {
 	public class LogoutModel : PageModel
 	{
+		#region log out
 		public async Task<IActionResult> OnPostAsync()
 		{
 			await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-			return RedirectToPage("Index");
+			return RedirectToPage("/Auth/Index");
 		}
+		#endregion
 	}
 }

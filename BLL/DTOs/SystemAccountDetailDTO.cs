@@ -2,7 +2,7 @@
 
 namespace BLL.DTOs
 {
-	public class SystemAccountDTO
+	public class SystemAccountDetailDTO
 	{
 		public required int AccountID { get; set; }
 		public required string AccountName { get; set; }

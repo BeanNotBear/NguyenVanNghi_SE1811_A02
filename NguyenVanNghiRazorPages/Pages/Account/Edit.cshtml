@@ -1,0 +1,48 @@
+﻿@model NguyenVanNghiRazorPages.Pages.Account.IndexModel
+@{
+}
+
+<div class="modal" id="editAccount">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form asp-page="Index" method="post">
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Edit Account</h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					<div class="mb-3 mt-3">
+						<label asp-for="EditAccountDTO.AccountID" class="form-label">Id:</label>
+						<input readonly asp-for="EditAccountDTO.AccountID" type="text" class="form-control">
+						<span class="text-danger" asp-validation-for="EditAccountDTO.AccountID"></span>
+					</div>
+					<div class="mb-3 mt-3">
+						<label asp-for="EditAccountDTO.AccountName" class="form-label">Name:</label>
+						<input asp-for="EditAccountDTO.AccountName" type="text" class="form-control" placeholder="Enter name">
+						<span class="text-danger" asp-validation-for="EditAccountDTO.AccountName"></span>
+					</div>
+					<div class="mb-3 mt-3">
+						<label asp-for="EditAccountDTO.AccountRole" class="form-label">Role:</label>
+						<select asp-for="EditAccountDTO.AccountRole" class="form-select w-auto" asp-items="Model.Roles">
+						</select>
+						<span class="text-danger" asp-validation-for="EditAccountDTO.AccountRole"></span>
+					</div>
+					<div class="mb-3 mt-3">
+						<label asp-for="EditAccountDTO.AccountEmail" class="form-label">Email:</label>
+						<input asp-for="EditAccountDTO.AccountEmail" type="email" class="form-control" placeholder="Enter email">
+						<span class="text-danger" asp-validation-for="EditAccountDTO.AccountEmail"></span>
+					</div>
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button asp-page-handler="Edit" type="submit" class="btn btn-primary">Submit</button>
+					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
