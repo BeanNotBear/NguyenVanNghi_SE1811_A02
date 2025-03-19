@@ -6,18 +6,18 @@ namespace BLL.DTOs
 	public class CreateNewsArticleDTO
 	{
 		[Required]
-		[StringLength(50, ErrorMessage = "News title cannot exceed 50 characters.")]
+		[StringLength(100, ErrorMessage = "News title cannot exceed 100 characters.")]
 		public string NewsTitle { get; set; } = null!;
 
 		[Required]
-		[StringLength(50, ErrorMessage = "Headline cannot exceed 50 characters.")]
+		[StringLength(100, ErrorMessage = "Headline cannot exceed 100 characters.")]
 		public string Headline { get; set; } = null!;
 
 		[Required]
 		public DateTime CreatedDate { get; set; } = DateTime.Now;
 
 		[Required]
-		[StringLength(50, ErrorMessage = "News source cannot exceed 255 characters.")]
+		[StringLength(100, ErrorMessage = "News source cannot exceed 100 characters.")]
 		public string NewsSource { get; set; } = null!;
 
 		[Required]

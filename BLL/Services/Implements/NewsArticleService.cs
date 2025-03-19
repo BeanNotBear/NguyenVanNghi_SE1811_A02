@@ -25,7 +25,7 @@ namespace BLL.Services.Implements
 		public async Task<IEnumerable<NewsArticleDTO>> GetAll(string? search = null, int? categoryId = null)
 		{
 			Expression<Func<NewsArticle, bool>> predicate = x => (
-				(string.IsNullOrWhiteSpace(search) || x.NewsTitle.ToLower() == search.ToLower() || x.Headline.ToLower() == search.ToLower()) &&
+				(string.IsNullOrWhiteSpace(search) || x.NewsTitle.ToLower().Contains(search.ToLower())  || x.Headline.ToLower().Contains(search.ToLower())) &&
 				(!categoryId.HasValue || x.CategoryId == categoryId)
 			);
 			string[] properties = new string[] { "Category", "CreatedBy", "Tags" };
@@ -40,6 +40,13 @@ namespace BLL.Services.Implements
 			return mapper.Map<NewsArticleDetailsDTO>(newsArticle);
 		}
 
+		public async Task<EditNewsArticleDTO> GetById(int id)
+		{
+			string[] properties = new string[] { "Tags" };
+			var newsArticle = await FindById(id, properties);
+			return mapper.Map<EditNewsArticleDTO>(newsArticle);
+		}
+
 		private async Task<NewsArticle?> FindById(int id, string[]? properties = null)
 		{
 			Expression<Func<NewsArticle, bool>> predicate = x => (
@@ -47,5 +54,37 @@ namespace BLL.Services.Implements
 			);
 			return await unitOfWork.GenericRepository.Get(predicate, properties);
 		}
+
+		public async Task Update(EditNewsArticleDTO editNewsArticleDTO)
+		{
+			string[] properties = new string[] { "Tags" };
+			var news = await FindById(editNewsArticleDTO.NewsArticleId, properties);
+			if (news == null)
+			{
+				throw new Exception("News article not found.");
+			}
+
+			mapper.Map(editNewsArticleDTO, news);
+
+			ICollection<Tag> tags = new List<Tag>();
+			foreach (var item in editNewsArticleDTO.Tags)
+			{
+				var tag = await tagService.GetById(item);
+				if (tag != null)
+				{
+					tags.Add(tag);
+				}
+			}
+
+			news.Tags.Clear();
+			foreach (var tag in tags)
+			{
+				news.Tags.Add(tag);
+			}
+
+			unitOfWork.GenericRepository.Update(news);
+			await unitOfWork.SaveChangesAsync();
+		}
+
 	}
 }

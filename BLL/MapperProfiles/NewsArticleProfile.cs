@@ -20,5 +20,11 @@ public class NewsArticleProfile : Profile
 			.ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy.AccountName))
 			.ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy != null ? src.UpdatedBy.AccountName : ""))
 			.ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags.Select(x => x.TagName)));
+
+		CreateMap<NewsArticle, EditNewsArticleDTO>()
+			.ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags.Select(x => x.TagId)));
+
+		CreateMap<EditNewsArticleDTO, NewsArticle>()
+			.ForMember(dest => dest.Tags, opt => opt.Ignore());
 	}
 }

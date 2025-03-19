@@ -1,0 +1,72 @@
+﻿@using System.Security.Claims
+@model NguyenVanNghiRazorPages.Pages.NewsArticle.ManageModel
+@{
+	var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+}
+<div class="modal" id="editNewsArticle">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<form asp-page="Manage" method="post">
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Edit News Article</h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					<div class="mb-3 mt-3">
+						<label asp-for="EditNewsArticleDTO.NewsArticleId" class="form-label">ID:</label>
+						<input readonly asp-for="EditNewsArticleDTO.NewsArticleId" type="text" class="form-control" placeholder="Enter ID">
+						<span asp-validation-for="EditNewsArticleDTO.NewsArticleId" class="text-danger"></span>
+					</div>
+					<div class="mb-3 mt-3">
+						<input asp-for="EditNewsArticleDTO.UpdatedById" type="hidden" value="@userId" />
+						<label asp-for="EditNewsArticleDTO.NewsTitle" class="form-label">Title:</label>
+						<input asp-for="EditNewsArticleDTO.NewsTitle" type="text" class="form-control" placeholder="Enter name">
+						<span asp-validation-for="EditNewsArticleDTO.NewsTitle" class="text-danger"></span>
+					</div>
+					<div class="mb-3 mt-3">
+						<label asp-for="EditNewsArticleDTO.Headline" class="form-label">Headline:</label>
+						<input asp-for="EditNewsArticleDTO.Headline" type="text" class="form-control" placeholder="Enter news article source">
+						<span asp-validation-for="EditNewsArticleDTO.Headline" class="text-danger"></span>
+					</div>
+					<div class="mb-3 mt-3">
+						<label asp-for="EditNewsArticleDTO.NewsSource" class="form-label">Source:</label>
+						<input asp-for="EditNewsArticleDTO.NewsSource" type="text" class="form-control" placeholder="Enter news article source">
+						<span asp-validation-for="EditNewsArticleDTO.NewsSource" class="text-danger"></span>
+					</div>
+					<div class="mb-3">
+						<label asp-for="EditNewsArticleDTO.CategoryId" class="form-label">Category:</label>
+						<select asp-for="EditNewsArticleDTO.CategoryId" class="form-select w-auto" asp-items="@Model.Categories">
+						</select>
+						<span asp-validation-for="EditNewsArticleDTO.CategoryId" class="text-danger"></span>
+					</div>
+					<div class="mb-3">
+						<label asp-for="EditNewsArticleDTO.Tags" class="form-label">Tags:</label>
+						<select multiple asp-for="EditNewsArticleDTO.Tags" class="form-select w-auto" asp-items="@Model.Tags">
+						</select>
+						<span asp-validation-for="EditNewsArticleDTO.Tags" class="text-danger"></span>
+					</div>
+					<div class="mb-3">
+						<label asp-for="EditNewsArticleDTO.NewsStatus" class="form-label">Status:</label>
+						<select asp-for="EditNewsArticleDTO.NewsStatus" class="form-select w-auto" asp-items="@Model.Status">
+						</select>
+						<span asp-validation-for="EditNewsArticleDTO.NewsStatus" class="text-danger"></span>
+					</div>
+					<div class="mb-3 mt-3">
+						<label asp-for="EditNewsArticleDTO.NewsContent" class="form-label">Content:</label>
+						<textarea asp-for="EditNewsArticleDTO.NewsContent" class="form-control"></textarea>
+						<span asp-validation-for="EditNewsArticleDTO.NewsContent" class="text-danger"></span>
+					</div>
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button asp-page-handler="Edit" type="submit" class="btn btn-primary">Submit</button>
+					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
