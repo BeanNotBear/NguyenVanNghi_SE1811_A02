@@ -18,6 +18,10 @@ namespace NguyenVanNghiRazorPages.Pages.Account
 		[BindProperty]
 		public CreateAccountDTO AccountDTO { get; set; }
 
+		[BindProperty]
+		public EditAccountDTO EditAccountDTO { get; set; }
+
+
 		public SelectList? Roles { get; set; }
 
 		public async Task OnGet(string? search = null, AccountRole? accountRole = null)
@@ -27,7 +31,28 @@ namespace NguyenVanNghiRazorPages.Pages.Account
 			Roles = new SelectList(roles, accountRole);
 		}
 
+		#region create account
 		public IActionResult OnPostCreate()
+		{
+			if (!ModelState.IsValid)
+			{
+				var roles = new List<AccountRole> { AccountRole.Admin, AccountRole.Staff, AccountRole.Lecturer };
+				Roles = new SelectList(roles);
+			}
+
+			accountService.Create(AccountDTO);
+			return RedirectToPage("/Account/Index");
+		}
+		#endregion
+
+		#region eddit account
+		public async Task<JsonResult> OnGetEdit(int id)
+		{
+			var account = await accountService.GetByID(id);
+			return new JsonResult(account);
+		}
+
+		public async Task<IActionResult> OnPostEdit()
 		{
 			if (!ModelState.IsValid)
 			{
@@ -35,9 +60,9 @@ namespace NguyenVanNghiRazorPages.Pages.Account
 				Roles = new SelectList(roles);
 				return Page();
 			}
-
-			accountService.Create(AccountDTO);
+			await accountService.Update(EditAccountDTO);
 			return RedirectToPage("/Account/Index");
 		}
+		#endregion
 	}
 }

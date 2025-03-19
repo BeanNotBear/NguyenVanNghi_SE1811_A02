@@ -53,12 +53,16 @@
 					@foreach (var item in Model.SystemAccounts)
 					{
 						<tr>
-							<td>@item.ID</td>
+							<td>@item.AccountID</td>
 							<td>@item.AccountName</td>
 							<td>@item.AccountEmail</td>
 							<td>@item.AccountRole.ToString()</td>
 							<td class="text-center">
-								<button class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</button>
+								<button class="btn btn-warning btn-sm" type="button" data-bs-toggle="modal"
+										onclick="editAccount('@item.AccountID')"
+										data-bs-target="#editAccount">
+									<i class="fas fa-edit"></i> Edit
+								</button>
 								<button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Delete</button>
 							</td>
 						</tr>
@@ -68,7 +72,8 @@
 		</div>
 	</div>
 
-	<partial name="Create" model="Model"></partial>
+	<partial name="Create" model="Model" />
+	<partial name="Edit" model="Model" />
 </div>
 
 @section Scripts {

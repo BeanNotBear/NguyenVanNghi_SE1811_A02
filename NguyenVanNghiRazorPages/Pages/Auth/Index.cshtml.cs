@@ -50,5 +50,6 @@ namespace NguyenVanNghiRazorPages.Pages.Auth
 			await HttpContext.SignInAsync(claimsPrincipal, authProperties);
 			return RedirectToPage("/Index");
 		}
+
 	}
 }

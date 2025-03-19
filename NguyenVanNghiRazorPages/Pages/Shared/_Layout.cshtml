@@ -12,7 +12,7 @@
 	<header>
 		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
 			<div class="container-fluid">
-				<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">FUNewsManagementSystem</a>
+				<a class="navbar-brand" asp-page="/Index">FUNewsManagementSystem</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
 						aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
@@ -20,15 +20,15 @@
 				<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
 					<ul class="navbar-nav flex-grow-1">
 						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+							<a class="nav-link text-dark" asp-page="/Index">Home</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+							<a class="nav-link text-dark" asp-page="/Privacy">Privacy</a>
 						</li>
 						@if (User.IsInRole("Admin"))
 						{
 							<li class="nav-item">
-								<a class="nav-link text-dark" asp-area=""asp-page="Account/Index">Manage Account</a>
+								<a class="nav-link text-dark" asp-page="Account/Index">Manage Account</a>
 							</li>
 						}
 					</ul>
@@ -40,16 +40,16 @@
 							<li class="nav-item">
 								<a asp-page="Auth/Index" class="nav-link text-white btn btn-primary">Sign In</a>
 							</li>
-							<li class="nav-item ms-3">
-								<form asp-controller="Auth" asp-action="Login" method="get">
-									<button class="nav-link text-white btn btn-secondary">Sign Up</button>
-								</form>
-							</li>
+							@* <li class="nav-item ms-3"> *@
+							@* 	<form asp-controller="Auth" asp-action="Login" method="get"> *@
+							@* 		<button class="nav-link text-white btn btn-secondary">Sign Up</button> *@
+							@* 	</form> *@
+							@* </li> *@
 						}
 						else
 						{
 							<li class="nav-item">
-								<form asp-page="Auth/Logout" method="post">
+								<form asp-page="/Auth/Logout" method="post">
 									<button class="nav-link text-dark btn btn-outline-warning">Logout</button>
 								</form>
 							</li>
