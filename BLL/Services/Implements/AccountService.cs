@@ -5,7 +5,9 @@ using DAL.Entities;
 using DAL.Repositories.Interfaces;
 using Shared.Enums;
 using Shared.PasswordHasher;
+using System;
 using System.Data;
+using System.Drawing;
 using System.Linq.Expressions;
 
 namespace BLL.Services.Implements
@@ -35,6 +37,29 @@ namespace BLL.Services.Implements
 
 		public async Task<SystemAccountDetailDTO> GetByID(int ID, string? properties = null)
 		{
+			return mapper.Map<SystemAccountDetailDTO>(await FindByID(ID, properties));
+		}
+
+		public async Task Update(EditAccountDTO editAccountDTO)
+		{
+
+			var account = await FindByID(editAccountDTO.AccountID);
+			account.AccountName = editAccountDTO.AccountName;
+			account.AccountEmail = editAccountDTO.AccountEmail;
+			account.AccountRole = (int)(editAccountDTO.AccountRole);
+			unitOfWork.GenericRepository.Update(account);
+			await unitOfWork.SaveChangesAsync();
+		}
+
+		public async Task Delete(int id)
+		{
+			var account = await FindByID(id);
+			unitOfWork.GenericRepository.Delete(account);
+			await unitOfWork.SaveChangesAsync();
+		}
+
+		private async Task<SystemAccount?> FindByID(int ID, string? properties = null)
+		{
 			Expression<Func<SystemAccount, bool>> predicate = x =>
 			(
 				x.AccountId == ID
@@ -45,15 +70,7 @@ namespace BLL.Services.Implements
 				joins = properties.Split(',');
 			}
 			var account = await unitOfWork.GenericRepository.Get(predicate, joins);
-			return mapper.Map<SystemAccountDetailDTO>(account);
-		}
-
-		public async Task Update(EditAccountDTO editAccountDTO)
-		{
-			var account = mapper.Map<SystemAccount>(editAccountDTO);
-			account.AccountPassword = PasswordHasher.Instance.Hash(account.AccountPassword);
-			unitOfWork.GenericRepository.Update(account);
-			await unitOfWork.SaveChangesAsync();
+			return account;
 		}
 	}
 }

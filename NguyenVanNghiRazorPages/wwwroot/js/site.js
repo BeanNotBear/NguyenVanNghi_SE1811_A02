@@ -26,6 +26,10 @@ function editAccount(id) {
 	});
 }
 
+function loadDelete(id) {
+	$("#deleteAccountID").val(id)
+}
+
 function logout() {
 	document.cookie.split(";").forEach(function (cookie) {
 		document.cookie = cookie

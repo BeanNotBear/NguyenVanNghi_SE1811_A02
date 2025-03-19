@@ -45,7 +45,7 @@ namespace NguyenVanNghiRazorPages.Pages.Account
 		}
 		#endregion
 
-		#region eddit account
+		#region edit account
 		public async Task<JsonResult> OnGetEdit(int id)
 		{
 			var account = await accountService.GetByID(id);
@@ -54,6 +54,10 @@ namespace NguyenVanNghiRazorPages.Pages.Account
 
 		public async Task<IActionResult> OnPostEdit()
 		{
+			ModelState.Remove("AccountName");
+			ModelState.Remove("AccountEmail");
+			ModelState.Remove("AccountPassword");
+			ModelState.Remove("ConfirmPassword");
 			if (!ModelState.IsValid)
 			{
 				var roles = new List<AccountRole> { AccountRole.Admin, AccountRole.Staff, AccountRole.Lecturer };
@@ -61,6 +65,14 @@ namespace NguyenVanNghiRazorPages.Pages.Account
 				return Page();
 			}
 			await accountService.Update(EditAccountDTO);
+			return RedirectToPage("/Account/Index");
+		}
+		#endregion
+
+		#region delete account
+		public async Task<IActionResult> OnPostDelete(int id)
+		{
+			await accountService.Delete(id);
 			return RedirectToPage("/Account/Index");
 		}
 		#endregion

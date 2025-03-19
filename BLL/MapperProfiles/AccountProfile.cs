@@ -14,6 +14,7 @@ namespace BLL.MapperProfiles
 				.ForMember(dest => dest.AccountRole, opt => opt.MapFrom(src => (AccountRole)(src.AccountRole)));
 			CreateMap<CreateAccountDTO, SystemAccount>().ForMember(dest => dest.AccountRole, opt => opt.MapFrom(src => (int)(src.AccountRole)));
 			CreateMap<SystemAccount, SystemAccountDetailDTO>().ForMember(dest => dest.AccountRole, opt => opt.MapFrom(src => (int)(src.AccountRole)));
+			CreateMap<EditAccountDTO, SystemAccount>().ForMember(dest => dest.AccountRole, opt => opt.MapFrom(src => (int)(src.AccountRole)));
 		}
 	}
 }
