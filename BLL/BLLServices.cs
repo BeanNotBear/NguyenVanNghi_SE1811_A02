@@ -12,6 +12,8 @@ namespace BLL
 			services.AddAutoMapper(typeof(BLLServices));
 			services.AddScoped<IAuthService, AuthService>();
 			services.AddScoped<IAccountService, AccountService>();
+			services.AddScoped<ICategoryService, CategoryService>();
+			services.AddScoped<INewsArticleService, NewsArticleService>();
 		}
 	}
 }

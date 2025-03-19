@@ -1,0 +1,61 @@
+﻿@using System.Security.Claims
+@model NguyenVanNghiRazorPages.Pages.NewsArticle.ManageModel
+@{
+	var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+}
+<div class="modal" id="createNewsArticle">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<form asp-page="Manage" method="post">
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Create News Article</h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					<div class="mb-3 mt-3">
+						<input asp-for="CreateNewsArticleDTO.CreatedById" type="hidden" value="@userId" />
+						<label asp-for="CreateNewsArticleDTO.NewsTitle" class="form-label">Title:</label>
+						<input asp-for="CreateNewsArticleDTO.NewsTitle" type="text" class="form-control" placeholder="Enter name">
+						<span asp-validation-for="CreateNewsArticleDTO.NewsTitle" class="text-danger"></span>
+					</div>
+					<div class="mb-3 mt-3">
+						<label asp-for="CreateNewsArticleDTO.Headline" class="form-label">Headline:</label>
+						<input asp-for="CreateNewsArticleDTO.Headline" type="text" class="form-control" placeholder="Enter news article source">
+						<span asp-validation-for="CreateNewsArticleDTO.Headline" class="text-danger"></span>
+					</div>
+					<div class="mb-3 mt-3">
+						<label asp-for="CreateNewsArticleDTO.NewsSource" class="form-label">Source:</label>
+						<input asp-for="CreateNewsArticleDTO.NewsSource" type="text" class="form-control" placeholder="Enter news article source">
+						<span asp-validation-for="CreateNewsArticleDTO.NewsSource" class="text-danger"></span>
+					</div>
+					<div class="mb-3">
+						<label asp-for="CreateNewsArticleDTO.CategoryId" class="form-label">Category:</label>
+						<select asp-for="CreateNewsArticleDTO.CategoryId" class="form-select w-auto" asp-items="@Model.Categories">
+						</select>
+						<span asp-validation-for="CreateNewsArticleDTO.CategoryId" class="text-danger"></span>
+					</div>
+					<div class="mb-3">
+						<label asp-for="CreateNewsArticleDTO.NewsStatus" class="form-label">Status:</label>
+						<select asp-for="CreateNewsArticleDTO.NewsStatus" class="form-select w-auto" asp-items="@Model.Status">
+						</select>
+						<span asp-validation-for="CreateNewsArticleDTO.NewsStatus" class="text-danger"></span>
+					</div>
+					<div class="mb-3 mt-3">
+						<label asp-for="CreateNewsArticleDTO.NewsContent" class="form-label">Content:</label>
+						<textarea asp-for="CreateNewsArticleDTO.NewsContent" class="form-control"></textarea>
+						<span asp-validation-for="CreateNewsArticleDTO.NewsContent" class="text-danger"></span>
+					</div>
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button asp-page-handler="Create" type="submit" class="btn btn-primary">Submit</button>
+					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
