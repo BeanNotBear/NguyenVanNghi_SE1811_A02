@@ -34,6 +34,7 @@ namespace NguyenVanNghiRazorPages.Pages.Auth
 			}
 			var claims = new List<Claim>
 					{
+						new Claim(ClaimTypes.NameIdentifier, user.AccountId.ToString()),
 						new Claim(ClaimTypes.Role, ((AccountRole)user.AccountRole).ToString())
 					};
 

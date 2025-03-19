@@ -13,7 +13,7 @@ namespace DAL.Repositories.Implements
 		}
 
 		public async Task<IEnumerable<TEntity>> GetAll(Expression<Func<TEntity, bool>>? predicates = null,
-			Func<IReadOnlyList<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null)
+			Func<IReadOnlyList<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null, string[]? properties = null)
 		{
 			var query = context.Set<TEntity>().AsQueryable();
 			if (predicates != null)
@@ -23,6 +23,13 @@ namespace DAL.Repositories.Implements
 			if (orderBy != null)
 			{
 				query = orderBy(await query.ToListAsync());
+			}
+			if(properties != null)
+			{
+				foreach (var item in properties)
+				{
+					query = query.Include(item);
+				}
 			}
 			return await query.ToListAsync();
 		}

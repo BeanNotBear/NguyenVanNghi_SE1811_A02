@@ -21,7 +21,6 @@
   <ItemGroup>
     <Folder Include="Pages\Category\" />
     <Folder Include="Pages\Profile\" />
-    <Folder Include="Pages\NewsArticle\" />
   </ItemGroup>
 
 </Project>
