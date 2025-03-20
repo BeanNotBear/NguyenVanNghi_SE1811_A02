@@ -39,6 +39,10 @@ namespace NguyenVanNghiRazorPages.Pages.NewsArticle
 		#region create news
 		public async Task<IActionResult> OnPostCreate()
 		{
+			ModelState.Remove("Headline");
+			ModelState.Remove("NewsTitle");
+			ModelState.Remove("NewsSource");
+			ModelState.Remove("NewsContent");
 			if (!ModelState.IsValid)
 			{
 				var categories = await categoryService.GetAll();
@@ -71,6 +75,14 @@ namespace NguyenVanNghiRazorPages.Pages.NewsArticle
 				return Page();
 			}
 			await newsArticleService.Update(EditNewsArticleDTO);
+			return RedirectToPage("Manage");
+		}
+		#endregion
+
+		#region delete news
+		public async Task<IActionResult> OnPostDelete(int id)
+		{
+			await newsArticleService.Delete(id);
 			return RedirectToPage("Manage");
 		}
 		#endregion

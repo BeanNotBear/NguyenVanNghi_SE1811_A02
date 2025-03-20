@@ -26,8 +26,8 @@ function editAccount(id) {
 	});
 }
 
-function loadDelete(id) {
-	$("#deleteAccountID").val(id)
+function loadDelete(id, tagId) {
+	$(`#${tagId}`).val(id)
 }
 
 function editNewsArticle(id) {

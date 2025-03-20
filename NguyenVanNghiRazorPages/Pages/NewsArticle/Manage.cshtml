@@ -69,6 +69,7 @@
 									<i class="fas fa-edit"></i> Edit
 								</button>
 								<button class="btn btn-danger btn-sm" data-bs-toggle="modal"
+										onclick="loadDelete('@item.NewsArticleId', 'deleteNewsID')"
 										data-bs-target="#deleteNewsArticle">
 									<i class="fas fa-trash-alt"></i> Delete
 								</button>
@@ -81,6 +82,7 @@
 	</div>
 	<partial name="Create" model="Model" />
 	<partial name="Edit" model="Model" />
+	<partial name="Delete" model="Model"/>
 </div>
 
 @section Scripts {

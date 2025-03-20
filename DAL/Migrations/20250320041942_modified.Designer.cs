@@ -4,6 +4,7 @@ using DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(FunewsManagementSystemContext))]
-    partial class FunewsManagementSystemContextModelSnapshot : ModelSnapshot
+    [Migration("20250320041942_modified")]
+    partial class modified
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,7 +83,7 @@ namespace DAL.Migrations
 
                     b.Property<string>("Headline")
                         .IsRequired()
-                        .HasColumnType("nvarchar(MAX)");
+                        .HasColumnType("ntext");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime");
@@ -99,7 +102,8 @@ namespace DAL.Migrations
 
                     b.Property<string>("NewsTitle")
                         .IsRequired()
-                        .HasColumnType("nvarchar(MAX)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int?>("UpdatedById")
                         .HasColumnType("int")
@@ -155,7 +159,7 @@ namespace DAL.Migrations
                             AccountId = 1,
                             AccountEmail = "admin@FUNewsManagementSystem.org",
                             AccountName = "Admin",
-                            AccountPassword = "9C7A7A446B167778CEFAD8F3F896B56F15EEFD0283C88B094BE6BF6009E2F90A-413D4B25C4964C5F3E8FC50AC16F406B",
+                            AccountPassword = "18DC75A280972BBBD1478A854F8B14BBC1688674CCFB8CB43F7156EA9092DA06-FFA3BC788B6E1232C02438EAD6EDB2C0",
                             AccountRole = 0
                         });
                 });

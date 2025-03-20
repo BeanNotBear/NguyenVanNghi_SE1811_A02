@@ -3,6 +3,7 @@ using BLL.DTOs;
 using BLL.Services.Interfaces;
 using DAL.Entities;
 using DAL.Repositories.Interfaces;
+using Shared.Enums;
 using System.Linq.Expressions;
 
 namespace BLL.Services.Implements
@@ -22,11 +23,12 @@ namespace BLL.Services.Implements
 			await unitOfWork.SaveChangesAsync();
 		}
 
-		public async Task<IEnumerable<NewsArticleDTO>> GetAll(string? search = null, int? categoryId = null)
+		public async Task<IEnumerable<NewsArticleDTO>> GetAll(string? search = null, int? categoryId = null, NewsStatus? status = null)
 		{
 			Expression<Func<NewsArticle, bool>> predicate = x => (
-				(string.IsNullOrWhiteSpace(search) || x.NewsTitle.ToLower().Contains(search.ToLower())  || x.Headline.ToLower().Contains(search.ToLower())) &&
-				(!categoryId.HasValue || x.CategoryId == categoryId)
+				(string.IsNullOrWhiteSpace(search) || x.NewsTitle.ToLower().Contains(search.ToLower()) || x.Headline.ToLower().Contains(search.ToLower())) &&
+				(!categoryId.HasValue || x.CategoryId == categoryId) &&
+				(!status.HasValue || x.NewsStatus == (int)status)
 			);
 			string[] properties = new string[] { "Category", "CreatedBy", "Tags" };
 			var newsArticles = await unitOfWork.GenericRepository.GetAll(predicate, null, properties);
@@ -86,5 +88,17 @@ namespace BLL.Services.Implements
 			await unitOfWork.SaveChangesAsync();
 		}
 
+		public async Task Delete(int id)
+		{
+			string[] properties = new string[] { "Tags" };
+			var news = await FindById(id, properties);
+			if (news is null)
+			{
+				throw new Exception("News article not found.");
+			}
+			news.Tags.Clear();
+			unitOfWork.GenericRepository.Delete(news);
+			await unitOfWork.SaveChangesAsync();
+		}
 	}
 }

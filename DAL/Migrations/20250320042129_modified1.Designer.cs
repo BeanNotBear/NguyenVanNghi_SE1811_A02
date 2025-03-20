@@ -4,6 +4,7 @@ using DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(FunewsManagementSystemContext))]
-    partial class FunewsManagementSystemContextModelSnapshot : ModelSnapshot
+    [Migration("20250320042129_modified1")]
+    partial class modified1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,7 +83,7 @@ namespace DAL.Migrations
 
                     b.Property<string>("Headline")
                         .IsRequired()
-                        .HasColumnType("nvarchar(MAX)");
+                        .HasColumnType("ntext");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime");
@@ -99,7 +102,7 @@ namespace DAL.Migrations
 
                     b.Property<string>("NewsTitle")
                         .IsRequired()
-                        .HasColumnType("nvarchar(MAX)");
+                        .HasColumnType("ntext");
 
                     b.Property<int?>("UpdatedById")
                         .HasColumnType("int")
@@ -155,7 +158,7 @@ namespace DAL.Migrations
                             AccountId = 1,
                             AccountEmail = "admin@FUNewsManagementSystem.org",
                             AccountName = "Admin",
-                            AccountPassword = "9C7A7A446B167778CEFAD8F3F896B56F15EEFD0283C88B094BE6BF6009E2F90A-413D4B25C4964C5F3E8FC50AC16F406B",
+                            AccountPassword = "B0E3135DDF0235551EF87F36DBB25B8475D69799DABD8B26B82A80819C956CFA-05C28CF49ABA5B3B9C6193F94DBCBBF6",
                             AccountRole = 0
                         });
                 });
