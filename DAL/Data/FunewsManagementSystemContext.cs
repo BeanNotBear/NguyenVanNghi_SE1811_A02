@@ -70,11 +70,11 @@ public partial class FunewsManagementSystemContext : DbContext
 			entity.Property(e => e.CreatedDate)
 				.HasDefaultValueSql("(getdate())")
 				.HasColumnType("datetime");
-			entity.Property(e => e.Headline).HasMaxLength(50);
+			entity.Property(e => e.Headline).HasColumnType("nvarchar(MAX)");
 			entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
 			entity.Property(e => e.NewsContent).HasColumnType("ntext");
 			entity.Property(e => e.NewsSource).HasMaxLength(255);
-			entity.Property(e => e.NewsTitle).HasMaxLength(50);
+			entity.Property(e => e.NewsTitle).HasColumnType("nvarchar(MAX)");
 			entity.Property(e => e.UpdatedById).HasColumnName("UpdatedByID");
 
 			entity.HasOne(d => d.Category).WithMany(p => p.NewsArticles)
