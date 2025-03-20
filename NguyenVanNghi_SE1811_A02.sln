@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NguyenVanNghiRazorPages", "NguyenVanNghiRazorPages\NguyenVanNghiRazorPages.csproj", "{6A525E62-7EB8-4429-B57B-CDFB39480C1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NguyenVanNghiRazorPages", "NguyenVanNghiRazorPages\NguyenVanNghiRazorPages.csproj", "{6A525E62-7EB8-4429-B57B-CDFB39480C1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{EBA2BD50-F532-4540-B747-99FB55CA1C55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csproj", "{EBA2BD50-F532-4540-B747-99FB55CA1C55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{89A7FBB0-48CC-4654-98CC-C2394337E799}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{89A7FBB0-48CC-4654-98CC-C2394337E799}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{9135E0B9-D18B-42E5-A321-8593DCD8A467}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL", "BLL\BLL.csproj", "{9135E0B9-D18B-42E5-A321-8593DCD8A467}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

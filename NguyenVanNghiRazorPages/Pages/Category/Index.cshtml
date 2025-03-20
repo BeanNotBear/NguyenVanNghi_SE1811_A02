@@ -1,15 +1,16 @@
 ﻿@page
-@model NguyenVanNghiRazorPages.Pages.Account.IndexModel
+@model NguyenVanNghiRazorPages.Pages.Category.IndexModel
 @{
-	ViewData["Title"] = "Manage Account";
+	ViewData["Title"] = "Manage Category";
 	var search = Request.Query["search"];
+
 }
 
 <div class="container mt-4">
 	<div class="d-flex justify-content-between align-items-center mb-3">
 		<h1 class="text-primary"></h1>
 		<button class="btn btn-success shadow-sm" type="button" data-bs-toggle="modal" data-bs-target="#createAccount">
-			<i class="fas fa-user-plus me-2"></i> Add New Category
+			<i class="fas fa-user-plus me-2"></i> Add New Account
 		</button>
 	</div>
 
@@ -24,8 +25,8 @@
 			</div>
 
 			<!-- Role Selection Dropdown -->
-			<select onchange="this.form.submit()" name="accountRole" class="form-select w-auto" asp-items="Model.Roles">
-				<option value="">All Roles</option>
+			<select onchange="this.form.submit()" name="categoryStatus" class="form-select w-auto" asp-items="Model.Status">
+				<option value="">All Status</option>
 			</select>
 		</form>
 
@@ -42,32 +43,40 @@
 			<table class="table table-hover" id="accountTable">
 				<thead class="table-dark">
 					<tr>
-						<th>Account ID</th>
-						<th>Account Name</th>
-						<th>Account Email</th>
-						<th>Role</th>
+						<th>Category ID</th>
+						<th>Category Name</th>
+						<th>Category Description</th>
+						<th>Parent Category ID</th>
+						<th>Is Active</th>
 						<th class="text-center">Actions</th>
 					</tr>
 				</thead>
 				<tbody>
-					@foreach (var item in Model.SystemAccounts)
+					@foreach (var item in Model.Categories)
 					{
 						<tr>
-							<td>@item.AccountID</td>
-							<td>@item.AccountName</td>
-							<td>@item.AccountEmail</td>
-							<td>@item.AccountRole.ToString()</td>
+							<td>@item.CategoryId</td>
+							<td>@item.CategoryName</td>
+							<td>@item.CategoryDescription</td>
+							@if (@item.ParentCategory != null)
+							{
+								<td>
+									@item.ParentCategory.CategoryName
+								</td>
+							}
+							else
+							{
+								<td></td>
+							}
+							@if (item.IsActive)
+							{
+								<td>Active</td>
+							}
+							else
+							{
+								<td>InActive</td>
+							}
 							<td class="text-center">
-								<button class="btn btn-warning btn-sm" type="button" data-bs-toggle="modal"
-										onclick="editAccount('@item.AccountID')"
-										data-bs-target="#editAccount">
-									<i class="fas fa-edit"></i> Edit
-								</button>
-								<button class="btn btn-danger btn-sm" data-bs-toggle="modal"
-										data-bs-target="#deleteAccount"
-										onclick="loadDelete('@item.AccountID', 'deleteAccountID')">
-									<i class="fas fa-trash-alt"></i> Delete
-								</button>
 							</td>
 						</tr>
 					}
@@ -75,10 +84,6 @@
 			</table>
 		</div>
 	</div>
-
-	<partial name="Create" model="Model" />
-	<partial name="Edit" model="Model" />
-	<partial name="Delete" model="Model" />
 </div>
 
 @section Scripts {
