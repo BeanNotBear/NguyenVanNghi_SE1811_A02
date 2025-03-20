@@ -1,20 +1,26 @@
+using BLL.DTOs;
+using BLL.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Shared.Enums;
 
 namespace NguyenVanNghiRazorPages.Pages
 {
-    public class IndexModel : PageModel
-    {
-        private readonly ILogger<IndexModel> _logger;
+	[Authorize(Roles = "Lecturer")]
+	[AllowAnonymous]
+	public class IndexModel(INewsArticleService newsArticleService, ICategoryService categoryService) : PageModel
+	{
+		[BindProperty]
+		public IEnumerable<NewsArticleDTO> NewsArticleDTOs { get; set; }
 
-        public IndexModel(ILogger<IndexModel> logger)
-        {
-            _logger = logger;
-        }
-
-        public void OnGet()
-        {
-
-        }
-    }
+		[BindProperty]
+		public SelectList Categories { get; set; }
+		public async Task OnGet(string? search = null, int? category = null)
+		{
+			NewsArticleDTOs = await newsArticleService.GetAll(search, category, NewsStatus.Active);
+			Categories = new SelectList(await categoryService.GetAll(), "CategoryId", "CategoryName", category);
+		}
+	}
 }
