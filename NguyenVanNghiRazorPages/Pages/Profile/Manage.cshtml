@@ -3,13 +3,8 @@
 @{
 	var search = Request.Query["search"];
 }
+<h1>View Your New Article</h1>
 <div class="container mt-4">
-	<div class="d-flex justify-content-between align-items-center mb-3">
-		<h1 class="text-primary"></h1>
-		<button class="btn btn-success shadow-sm" type="button" data-bs-toggle="modal" data-bs-target="#createNewsArticle">
-			<i class="fas fa-user-plus me-2"></i> Add News Article
-		</button>
-	</div>
 
 	<div class="d-flex justify-content-between align-items-center mb-3 gap-3">
 		<form class="d-flex gap-2 flex-grow-1" asp-page="Manage" method="get">
