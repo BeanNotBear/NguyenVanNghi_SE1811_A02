@@ -83,3 +83,21 @@ function editCategory(id) {
         }
     });
 }
+
+function editPassword(id) {
+    $.ajax({
+        type: 'GET',
+        url: 'Profile/Index?handler=Password',
+        data: { id: id },
+        success: function (data) {
+            console.log("Received data:", data);
+
+            // Populate the form fields
+            $("#AccountPasswordDTO_AccountId").val(data.accountID);
+
+        },
+        error: function (xhr, status, error) {
+            console.error("Error fetching category data:", error);
+        }
+    });
+}

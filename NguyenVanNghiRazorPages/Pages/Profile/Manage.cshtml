@@ -1,0 +1,79 @@
+﻿@page
+@model NguyenVanNghiRazorPages.Pages.Profile.ManageModel
+@{
+	var search = Request.Query["search"];
+}
+<div class="container mt-4">
+	<div class="d-flex justify-content-between align-items-center mb-3">
+		<h1 class="text-primary"></h1>
+		<button class="btn btn-success shadow-sm" type="button" data-bs-toggle="modal" data-bs-target="#createNewsArticle">
+			<i class="fas fa-user-plus me-2"></i> Add News Article
+		</button>
+	</div>
+
+	<div class="d-flex justify-content-between align-items-center mb-3 gap-3">
+		<form class="d-flex gap-2 flex-grow-1" asp-page="Manage" method="get">
+			<!-- Search Input -->
+			<div class="input-group">
+				<input name="search" type="text" id="searchInput" class="form-control" placeholder="Search news article..." value="@search">
+				<button class="btn btn-primary" type="submit">
+					<i class="bi bi-search"></i> Search
+				</button>
+			</div>
+
+			<!-- Category Selection Dropdown -->
+			<select onchange="this.form.submit()" name="category" class="form-select w-auto" asp-items="Model.Categories">
+				<option value="">All Categories</option>
+			</select>
+		</form>
+
+		<!-- Reset Button -->
+		<a asp-page="Profile/Manage" class="btn btn-secondary">
+			<i class="bi bi-arrow-clockwise"></i> Reset
+		</a>
+	</div>
+
+
+
+	<div class="card shadow-sm">
+		<div class="card-body">
+			<table class="table table-hover" id="accountTable">
+				<thead class="table-dark">
+					<tr>
+						<th>News ID</th>
+						<th>News Title</th>
+						<th>Category</th>
+						<th>Status</th>
+						<th>Created Date</th>
+						<th>Created By</th>
+						<th class="text-center">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var item in Model.NewsArticleDTOs)
+					{
+						<tr>
+							<td>@item.NewsArticleId</td>
+							<td>@item.NewsTitle</td>
+							<td>@item.Category</td>
+							<td>@item.NewsStatus.ToString()</td>
+							<td>@item.CreatedDate.ToString("MMMM d, yyyy, h:mm tt")</td>
+							<td>@item.CreatedBy</td>
+							<td>
+								<a asp-page="/NewsArticle/Details" asp-route-id="@item.NewsArticleId" class="btn btn-primary btn-sm">
+									<i class="fas fa-edit"></i> View Details
+								</a>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	@{
+		<partial name="_ValidationScriptsPartial" />
+	}
+}

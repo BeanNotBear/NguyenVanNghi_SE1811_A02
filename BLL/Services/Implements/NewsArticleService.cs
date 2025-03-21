@@ -100,5 +100,32 @@ namespace BLL.Services.Implements
 			unitOfWork.GenericRepository.Delete(news);
 			await unitOfWork.SaveChangesAsync();
 		}
+
+		public async Task<IEnumerable<NewsArticleDTO>> GetList(string? search = null, int? categoryId = null, DateTime? startDate = null, DateTime? endDate = null, NewsStatus? status = null)
+		{
+			Expression<Func<NewsArticle, bool>> predicate = x => (
+				(string.IsNullOrWhiteSpace(search) || x.NewsTitle.ToLower().Contains(search.ToLower()) || x.Headline.ToLower().Contains(search.ToLower())) &&
+				(!categoryId.HasValue || x.CategoryId == categoryId) &&
+				(!status.HasValue || x.NewsStatus == (int)status) &&
+				(!startDate.HasValue || x.CreatedDate >= startDate.Value) &&
+				(!endDate.HasValue || x.CreatedDate <= endDate.Value)
+			);
+			string[] properties = new string[] { "Category", "CreatedBy", "Tags" };
+			var newsArticles = await unitOfWork.GenericRepository.GetAll(predicate, null, properties);
+			return mapper.Map<IEnumerable<NewsArticleDTO>>(newsArticles);
+		}
+
+		public async Task<IEnumerable<NewsArticleDTO>> GetListByID(string? search = null, int? categoryId = null, NewsStatus? status = null, int? id = null)
+		{
+			Expression<Func<NewsArticle, bool>> predicate = x => (
+				(string.IsNullOrWhiteSpace(search) || x.NewsTitle.ToLower().Contains(search.ToLower()) || x.Headline.ToLower().Contains(search.ToLower())) &&
+				(!categoryId.HasValue || x.CategoryId == categoryId) &&
+				(!status.HasValue || x.NewsStatus == (int)status) &&
+				(!id.HasValue || x.CreatedById == id)
+			);
+			string[] properties = new string[] { "Category", "CreatedBy", "Tags" };
+			var newsArticles = await unitOfWork.GenericRepository.GetAll(predicate, null, properties);
+			return mapper.Map<IEnumerable<NewsArticleDTO>>(newsArticles);
+		}
 	}
 }

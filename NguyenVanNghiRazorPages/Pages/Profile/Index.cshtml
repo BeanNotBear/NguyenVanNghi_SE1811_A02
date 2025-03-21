@@ -1,0 +1,48 @@
+﻿@page
+@model NguyenVanNghiRazorPages.Pages.Profile.IndexModel
+@{
+    ViewData["Title"] = "Edit Account";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-3">Edit Account</h2>
+
+    <!-- Bootstrap Card -->
+    <div class="card shadow-lg">
+        <div class="card-body">
+            <form method="post" asp-page-handler="edit" class="needs-validation" novalidate>
+                <div class="mb-3 visually-hidden">
+                    <label asp-for="SystemAccountDetailDTO.AccountID" class="form-label"></label>
+                    <input asp-for="SystemAccountDetailDTO.AccountID" class="form-control" required>
+                    <span asp-validation-for="SystemAccountDetailDTO.AccountID" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="SystemAccountDetailDTO.AccountName" class="form-label"></label>
+                    <input asp-for="SystemAccountDetailDTO.AccountName" class="form-control" required>
+                    <span asp-validation-for="SystemAccountDetailDTO.AccountName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="SystemAccountDetailDTO.AccountEmail" class="form-label"></label>
+                    <input asp-for="SystemAccountDetailDTO.AccountEmail" type="email" class="form-control" required readonly>
+                    <span asp-validation-for="SystemAccountDetailDTO.AccountEmail" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="SystemAccountDetailDTO.AccountRole" class="form-label"></label>
+                    <input asp-for="SystemAccountDetailDTO.AccountRole" type="text" class="form-control" required readonly>
+                    <span asp-validation-for="SystemAccountDetailDTO.AccountRole" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+                <button class="btn btn-warning" type="button" data-bs-toggle="modal"
+                        onclick="editPassword('@(Model.SystemAccountDetailDTO != null ? Model.SystemAccountDetailDTO.AccountID : "")')"
+                        data-bs-target="#editPassword">
+                    <i class="fas fa-edit"></i> Edit Password
+                </button>
+            </form>
+        </div>
+    </div>
+    <partial name="edit" model="Model" />
+</div>
