@@ -3,11 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using BLL;
 using DAL;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using NguyenVanNghiRazorPages.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddSignalR();
 
 #region configure database
 builder.Services.AddDbContext<FunewsManagementSystemContext>(options =>
@@ -52,5 +54,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
+app.MapHub<NewsArticleHub>("/newsArticleHub");
 
 app.Run();

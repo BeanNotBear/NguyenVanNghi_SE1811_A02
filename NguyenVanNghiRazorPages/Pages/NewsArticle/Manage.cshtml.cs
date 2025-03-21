@@ -4,12 +4,16 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.SignalR;
+using NguyenVanNghiRazorPages.Hubs;
 using Shared.Enums;
 
 namespace NguyenVanNghiRazorPages.Pages.NewsArticle
 {
 	[Authorize(Roles = "Staff")]
-	public class ManageModel(ICategoryService categoryService, INewsArticleService newsArticleService, ITagService tagService) : PageModel
+	public class ManageModel(ICategoryService categoryService, INewsArticleService newsArticleService,
+		ITagService tagService,
+		IHubContext<NewsArticleHub> hubContext) : PageModel
 	{
 		[BindProperty]
 		public CreateNewsArticleDTO CreateNewsArticleDTO { get; set; }
@@ -52,6 +56,8 @@ namespace NguyenVanNghiRazorPages.Pages.NewsArticle
 				return Page();
 			}
 			await newsArticleService.Create(CreateNewsArticleDTO);
+			await hubContext.Clients.All.SendAsync("UpdateNewsArticles");
+			await hubContext.Clients.All.SendAsync("UpdateNewsArticlesList");
 			return RedirectToPage("Manage");
 		}
 		#endregion
@@ -75,6 +81,8 @@ namespace NguyenVanNghiRazorPages.Pages.NewsArticle
 				return Page();
 			}
 			await newsArticleService.Update(EditNewsArticleDTO);
+			await hubContext.Clients.All.SendAsync("UpdateNewsArticles");
+			await hubContext.Clients.All.SendAsync("UpdateNewsArticlesList");
 			return RedirectToPage("Manage");
 		}
 		#endregion
@@ -83,6 +91,8 @@ namespace NguyenVanNghiRazorPages.Pages.NewsArticle
 		public async Task<IActionResult> OnPostDelete(int id)
 		{
 			await newsArticleService.Delete(id);
+			await hubContext.Clients.All.SendAsync("UpdateNewsArticles");
+			await hubContext.Clients.All.SendAsync("UpdateNewsArticlesList");
 			return RedirectToPage("Manage");
 		}
 		#endregion

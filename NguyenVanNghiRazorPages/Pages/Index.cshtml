@@ -1,10 +1,68 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+	var search = Request.Query["search"];
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container py-4">
+	<h1 class="mb-4">Latest News</h1>
+
+	<!-- Simple search bar -->
+	<div class="row mb-4">
+		<div class="d-flex justify-content-between align-items-center mb-3 gap-3">
+			<form class="d-flex gap-2 flex-grow-1" asp-page="Index" method="get">
+				<!-- Search Input -->
+				<div class="input-group">
+					<input name="search" type="text" id="searchInput" class="form-control" placeholder="Search news article..." value="@search">
+					<button class="btn btn-primary" type="submit">
+						<i class="bi bi-search"></i> Search
+					</button>
+				</div>
+
+				<!-- Category Selection Dropdown -->
+				<select onchange="this.form.submit()" name="category" class="form-select w-auto" asp-items="Model.Categories">
+					<option value="">All Categories</option>
+				</select>
+			</form>
+
+			<!-- Reset Button -->
+			<a asp-page="Index" class="btn btn-secondary">
+				<i class="bi bi-arrow-clockwise"></i> Reset
+			</a>
+		</div>
+	</div>
+
+	<!-- News list -->
+	<div class="row">
+		<div class="col-12">
+			@foreach (var article in Model.NewsArticleDTOs)
+			{
+				<div class="card mb-3">
+					<div class="row g-0">
+						<div class="col-md-12">
+							<div class="card-body">
+								<h5 class="card-title">@article.NewsTitle</h5>
+								<p class="card-text">@article.Headline</p>
+								<div class="d-flex justify-content-between align-items-center">
+									<div class="text-muted small">
+										<span class="badge bg-light text-primary me-2">@article.Category</span>
+										<i class="bi bi-calendar me-1"></i>@article.CreatedDate.ToString("MMM dd, yyyy")
+										<span class="ms-2"><i class="bi bi-person me-1"></i>@article.CreatedBy</span>
+									</div>
+									<a asp-page="NewsArticle/Details" asp-route-id="@article.NewsArticleId" class="btn btn-sm btn-primary">Read More</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			}
+		</div>
+	</div>
 </div>
+
+@section Scripts {
+	@{
+		<script src="~/js/signalr/dist/browser/signalr.js"></script>
+		<script src="~/js/newsArticle.js"></script>
+	}
+}

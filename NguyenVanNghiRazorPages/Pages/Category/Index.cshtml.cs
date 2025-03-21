@@ -26,8 +26,8 @@ namespace NguyenVanNghiRazorPages.Pages.Category
         public async Task OnGet(string? search = null, CategoryStatus? categoryStatus = null)
         {
             Categories = await categoryService.GetAllCategory(search, categoryStatus, new string[] { "ParentCategory" });
-            var statuss = new List<CategoryStatus> { CategoryStatus.Active, CategoryStatus.Inactive};
-            Status = new SelectList(statuss, categoryStatus);
+            var status = new List<CategoryStatus> { CategoryStatus.Active, CategoryStatus.Inactive};
+            Status = new SelectList(status, categoryStatus);
 			var categories = await categoryService.GetAll();
 			SelectCategory = new SelectList(categories, "CategoryId", "CategoryName");
 		}
@@ -51,6 +51,8 @@ namespace NguyenVanNghiRazorPages.Pages.Category
 		#region update category
 		public async Task<JsonResult> OnGetEdit(int id)
 		{
+			var status = new List<CategoryStatus> { CategoryStatus.Active, CategoryStatus.Inactive };
+			Status = new SelectList(status);
 			var category = await categoryService.GetByID(id);
 			return new JsonResult(new
 			{
@@ -67,12 +69,14 @@ namespace NguyenVanNghiRazorPages.Pages.Category
 		{
 			ModelState.Remove("CategoryName");
 			ModelState.Remove("IsActive");
+			ModelState.Remove("CategoryDTO.IsActive");
 			if (!ModelState.IsValid)
 			{
-				var statuss = new List<CategoryStatus> { CategoryStatus.Active, CategoryStatus.Inactive };
-				Status = new SelectList(statuss);
+				var status = new List<CategoryStatus> { CategoryStatus.Active, CategoryStatus.Inactive };
+				Status = new SelectList(status);
 				var categories = await categoryService.GetAll();
 				SelectCategory = new SelectList(categories, "CategoryId", "CategoryName");
+				return Page();
 			}
 			await categoryService.Update(CategoryDTO);
 			return RedirectToPage("/Category/Index");

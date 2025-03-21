@@ -82,11 +82,13 @@
 	</div>
 	<partial name="Create" model="Model" />
 	<partial name="Edit" model="Model" />
-	<partial name="Delete" model="Model"/>
+	<partial name="Delete" model="Model" />
 </div>
 
 @section Scripts {
 	@{
 		<partial name="_ValidationScriptsPartial" />
+		<script src="~/js/signalr/dist/browser/signalr.js"></script>
+		<script src="~/js/newsArticle.js"></script>
 	}
 }
