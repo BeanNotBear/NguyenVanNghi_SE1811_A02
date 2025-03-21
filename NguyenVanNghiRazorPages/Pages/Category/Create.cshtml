@@ -1,0 +1,48 @@
+﻿@model NguyenVanNghiRazorPages.Pages.Category.IndexModel
+@{
+}
+<div class="modal" id="createCategory">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form asp-page="Index" method="post">
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Create Category</h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					<div class="mb-3 mt-3">
+						<label asp-for="CategoryDTO.CategoryName" class="form-label">Name:</label>
+						<input asp-for="CategoryDTO.CategoryName" type="text" class="form-control" placeholder="Enter name">
+						<span class="text-danger" asp-validation-for="CategoryDTO.CategoryName"></span>
+					</div>
+					<div class="mb-3 mt-3">
+						<label asp-for="CategoryDTO.CategoryDescription" class="form-label">Description:</label>
+						<textarea asp-for="CategoryDTO.CategoryDescription" class="form-control"></textarea>
+						<span asp-validation-for="CategoryDTO.CategoryDescription" class="text-danger"></span>
+					</div>
+					<div class="mb-3 mt-3">
+						<label asp-for="CategoryDTO.ParentCategoryId" class="form-label">Parent Category:</label>
+						<select asp-for="CategoryDTO.ParentCategoryId" class="form-select w-auto" asp-items="@Model.SelectCategory">
+						</select>
+						<span class="text-danger" asp-validation-for="CategoryDTO.ParentCategory"></span>
+					</div>
+					<div class="mb-3 mt-3">
+						<label asp-for="CategoryDTO.IsActive" class="form-label">Role:</label>
+						<select asp-for="CategoryDTO.IsActive" class="form-select w-auto" asp-items="Model.Status">
+						</select>
+						<span class="text-danger" asp-validation-for="CategoryDTO.IsActive"></span>
+					</div>
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button asp-page-handler="Create" type="submit" class="btn btn-primary">Submit</button>
+					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

@@ -72,5 +72,13 @@ namespace BLL.Services.Implements
 			var account = await unitOfWork.GenericRepository.Get(predicate, joins);
 			return account;
 		}
+
+		public async Task UpdatePassword(AccountPasswordDTO accountPasswordDTO)
+		{
+			var account = await FindByID(accountPasswordDTO.AccountId);
+			account.AccountPassword = PasswordHasher.Instance.Hash(accountPasswordDTO.AccountPassword);
+			unitOfWork.GenericRepository.Update(account);
+			await unitOfWork.SaveChangesAsync();
+		}
 	}
 }

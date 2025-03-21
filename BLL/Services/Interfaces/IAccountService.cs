@@ -12,5 +12,6 @@ namespace BLL.Services.Interfaces
 		Task Update(EditAccountDTO editAccountDTO);
 		Task<SystemAccountDetailDTO> GetByID(int ID, string? properties = null);
 		Task Delete(int id);
+		Task UpdatePassword(AccountPasswordDTO accountPasswordDTO);
 	}
 }

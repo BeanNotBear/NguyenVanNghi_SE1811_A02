@@ -1,4 +1,5 @@
-﻿using BLL.DTOs;
+﻿using System;
+using BLL.DTOs;
 using Shared.Enums;
 
 namespace BLL.Services.Interfaces
@@ -11,5 +12,7 @@ namespace BLL.Services.Interfaces
 		Task<EditNewsArticleDTO> GetById(int id);
 		Task Update(EditNewsArticleDTO editNewsArticleDTO);
 		Task Delete(int id);
+		Task<IEnumerable<NewsArticleDTO>> GetList(string? search = null, int? categoryId = null, DateTime? startDate = null, DateTime? endDate = null, NewsStatus? status = null);
+		Task<IEnumerable<NewsArticleDTO>> GetListByID(string? search = null, int? categoryId = null, NewsStatus? status = null, int? id = null);
 	}
 }

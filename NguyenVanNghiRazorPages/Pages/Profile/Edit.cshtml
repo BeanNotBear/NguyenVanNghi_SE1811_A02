@@ -1,0 +1,36 @@
+﻿@model NguyenVanNghiRazorPages.Pages.Profile.IndexModel
+@{
+}
+<div class="modal" id="editPassword">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form asp-page="Index" method="post" asp-page-handler="password">
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Edit Password</h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					<div class="mb-3 mt-3 visually-hidden">
+						<label asp-for="AccountPasswordDTO.AccountId" class="form-label">ID:</label>
+						<input asp-for="AccountPasswordDTO.AccountId" type="text" class="form-control" placeholder="Enter name" readonly>
+						<span class="text-danger" asp-validation-for="AccountPasswordDTO.AccountId"></span>
+					</div>
+					<div class="mb-3 mt-3">
+						<label asp-for="AccountPasswordDTO.AccountPassword" class="form-label">Password:</label>
+						<input asp-for="AccountPasswordDTO.AccountPassword" type="text" class="form-control" placeholder="Enter password">
+						<span class="text-danger" asp-validation-for="AccountPasswordDTO.AccountPassword"></span>
+					</div>
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button asp-page-handler="password" type="submit" class="btn btn-primary">Submit</button>
+					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
