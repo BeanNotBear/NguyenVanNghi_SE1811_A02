@@ -1,0 +1,28 @@
+﻿@model NguyenVanNghiRazorPages.Pages.Category.IndexModel
+
+<div class="modal" id="deleteCategory">
+	<div class="modal-dialog">
+		<form asp-page="Index" method="post">
+			<div class="modal-content">
+				<input type="hidden" name="id" id="deleteCategoryID" />
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Delete Category</h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					Are you sure you want to delete this category?
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button asp-page-handler="Delete" type="submit" class="btn btn-danger">Delete</button>
+					<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</form>
+	</div>
+</div>

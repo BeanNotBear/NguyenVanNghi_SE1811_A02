@@ -9,8 +9,8 @@
 <div class="container mt-4">
 	<div class="d-flex justify-content-between align-items-center mb-3">
 		<h1 class="text-primary"></h1>
-		<button class="btn btn-success shadow-sm" type="button" data-bs-toggle="modal" data-bs-target="#createAccount">
-			<i class="fas fa-user-plus me-2"></i> Add New Account
+		<button class="btn btn-success shadow-sm" type="button" data-bs-toggle="modal" data-bs-target="#createCategory">
+			<i class="fas fa-user-plus me-2"></i> Add New Category
 		</button>
 	</div>
 
@@ -77,6 +77,16 @@
 								<td>InActive</td>
 							}
 							<td class="text-center">
+								<button class="btn btn-warning btn-sm" type="button" data-bs-toggle="modal"
+										onclick="editCategory('@item.CategoryId')"
+										data-bs-target="#editCategory">
+									<i class="fas fa-edit"></i> Edit
+								</button>
+								<button class="btn btn-danger btn-sm" data-bs-toggle="modal"
+										data-bs-target="#deleteCategory"
+										onclick="loadDelete('@item.CategoryId', 'deleteCategoryID')">
+									<i class="fas fa-trash-alt"></i> Delete
+								</button>
 							</td>
 						</tr>
 					}
@@ -84,6 +94,11 @@
 			</table>
 		</div>
 	</div>
+
+	<partial name="Create" model="Model" />
+	<partial name="Edit" model="Model" />
+	<partial name="Delete" model="Model" />
+
 </div>
 
 @section Scripts {

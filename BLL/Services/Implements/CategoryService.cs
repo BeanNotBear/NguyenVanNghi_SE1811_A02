@@ -10,7 +10,22 @@ namespace BLL.Services.Implements
 {
     public class CategoryService(IUnitOfWork<Category> unitOfWork, IMapper mapper) : ICategoryService
     {
-        public async Task<IEnumerable<CategoryForSelectDTO>> GetAll()
+		public async Task Create(CategoryDTO createCategoryDTO)
+		{
+			var category = mapper.Map<Category>(createCategoryDTO);
+			await unitOfWork.GenericRepository.Insert(category);
+			await unitOfWork.SaveChangesAsync();
+		}
+
+		public async Task Delete(int id)
+		{
+			var category = await FindByID(id);
+			unitOfWork.GenericRepository.Delete(category);
+			await unitOfWork.SaveChangesAsync();
+
+		}
+
+		public async Task<IEnumerable<CategoryForSelectDTO>> GetAll()
         {
             return mapper.Map<IEnumerable<CategoryForSelectDTO>>(await unitOfWork.GenericRepository.GetAll());
         }
@@ -26,5 +41,37 @@ namespace BLL.Services.Implements
 
             return categories;
         }
-    }
+
+		public async Task<CategoryDTO> GetByID(int ID, string? properties = null)
+		{
+			return mapper.Map<CategoryDTO>(await FindByID(ID, properties));
+		}
+
+		private async Task<Category?> FindByID(int ID, string? properties = null)
+		{
+			Expression<Func<Category, bool>> predicate = x =>
+			(
+				x.CategoryId == ID
+			);
+			string[]? joins = null;
+			if (properties != null)
+			{
+				joins = properties.Split(',');
+			}
+			var category = await unitOfWork.GenericRepository.Get(predicate, joins);
+			return category;
+		}
+
+		public async Task Update(CategoryDTO editCategoryDTO)
+		{
+			var category = await FindByID(editCategoryDTO.CategoryId);
+			category.CategoryName = editCategoryDTO.CategoryName;
+			category.CategoryDescription = editCategoryDTO.CategoryDescription;
+			category.ParentCategoryId = editCategoryDTO.ParentCategoryId;
+			category.IsActive = editCategoryDTO.IsActive;
+
+			unitOfWork.GenericRepository.Update(category);
+			await unitOfWork.SaveChangesAsync();
+		}
+	}
 }
