@@ -8,8 +8,8 @@ using Shared.Enums;
 
 namespace BLL.Services.Implements
 {
-    public class CategoryService(IUnitOfWork<Category> unitOfWork, IMapper mapper) : ICategoryService
-    {
+	public class CategoryService(IUnitOfWork<Category> unitOfWork, IMapper mapper) : ICategoryService
+	{
 		public async Task Create(CategoryDTO createCategoryDTO)
 		{
 			var category = mapper.Map<Category>(createCategoryDTO);
@@ -26,21 +26,21 @@ namespace BLL.Services.Implements
 		}
 
 		public async Task<IEnumerable<CategoryForSelectDTO>> GetAll()
-        {
-            return mapper.Map<IEnumerable<CategoryForSelectDTO>>(await unitOfWork.GenericRepository.GetAll());
-        }
+		{
+			return mapper.Map<IEnumerable<CategoryForSelectDTO>>(await unitOfWork.GenericRepository.GetAll());
+		}
 
-        public async Task<IEnumerable<CategoryDTO>> GetAllCategory(string? search = null, CategoryStatus? status = null, string[]? properties = null)
-        {
-            Expression<Func<Category, bool>> predicate = x =>
-            (
-                (string.IsNullOrWhiteSpace(search) || x.CategoryName.ToLower().ToString().Contains(search.ToLower()))
-                && (!status.HasValue || (x.IsActive ? 1 : 0)  == (int)(status.Value))
-            );
+		public async Task<IEnumerable<CategoryDTO>> GetAllCategory(string? search = null, CategoryStatus? status = null, string[]? properties = null)
+		{
+			Expression<Func<Category, bool>> predicate = x =>
+			(
+				(string.IsNullOrWhiteSpace(search) || x.CategoryName.ToLower().ToString().Contains(search.ToLower()))
+				&& (!status.HasValue || (x.IsActive ? 1 : 0) == (int)(status.Value))
+			);
 			var categories = mapper.Map<IEnumerable<CategoryDTO>>(await unitOfWork.GenericRepository.GetAll(predicate, x => x.OrderBy(a => a.CategoryName), properties));
 
-            return categories;
-        }
+			return categories;
+		}
 
 		public async Task<CategoryDTO> GetByID(int ID, string? properties = null)
 		{
@@ -68,7 +68,7 @@ namespace BLL.Services.Implements
 			category.CategoryName = editCategoryDTO.CategoryName;
 			category.CategoryDescription = editCategoryDTO.CategoryDescription;
 			category.ParentCategoryId = editCategoryDTO.ParentCategoryId;
-			category.IsActive = editCategoryDTO.IsActive;
+			category.IsActive = editCategoryDTO.CategoryStatus == CategoryStatus.Active;
 
 			unitOfWork.GenericRepository.Update(category);
 			await unitOfWork.SaveChangesAsync();

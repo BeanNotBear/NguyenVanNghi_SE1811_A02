@@ -35,10 +35,10 @@
 						<span class="text-danger" asp-validation-for="CategoryDTO.ParentCategory"></span>
 					</div>
 					<div class="mb-3 mt-3">
-						<label asp-for="CategoryDTO.IsActive" class="form-label">Role:</label>
-						<select asp-for="CategoryDTO.IsActive" class="form-select w-auto" asp-items="Model.Status">
+						<label asp-for="CategoryDTO.CategoryStatus" class="form-label">Status:</label>
+						<select asp-for="CategoryDTO.CategoryStatus" class="form-select w-auto" asp-items="Model.Status">
 						</select>
-						<span class="text-danger" asp-validation-for="CategoryDTO.IsActive"></span>
+						<span class="text-danger" asp-validation-for="CategoryDTO.CategoryStatus"></span>
 					</div>
 				</div>
 
